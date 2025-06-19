@@ -10,38 +10,40 @@ int main()
         cin >> n;
         if (n < 1 || n > 100)
         {
-            cout << "Nhap lai n , n phải lớn 0 và nhỏ hơn 100: ";
+            cout << "Nhap lai n, n phai lon hon 0 va nho hon 100: ";
         }
-
     } while (n < 1 || n > 100);
+
     int arr[n];
     for (int i = 0; i < n; i++)
     {
         cout << "Nhap arr[" << i << "]: ";
         cin >> arr[i];
     }
+
     bool found = false;
     int value;
-    cout << "Nhap gia tri bất kỳ: ";
+    cout << "Nhap gia tri bat ky: ";
     cin >> value;
+
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = i + 1; j < n; j++) // tránh lặp lại cặp (i,j) và (j,i)
         {
-            if (j == i)
+            if (arr[i] + arr[j] == value)
             {
-                continue;
-            }
-            if (i + j == value)
-            {
-                cout << "Cac phan tu co chi so " << i << " va " << j << " co tong bang " << value << endl;
+                cout << "Cac phan tu arr[" << i << "] = " << arr[i]
+                     << " va arr[" << j << "] = " << arr[j]
+                     << " co tong bang " << value << endl;
                 found = true;
             }
         }
     }
+
     if (!found)
     {
         cout << "Khong co hai phan tu nao co tong bang " << value << endl;
     }
+
     return 0;
 }
