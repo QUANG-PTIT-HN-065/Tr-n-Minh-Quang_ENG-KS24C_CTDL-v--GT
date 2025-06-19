@@ -28,7 +28,7 @@ int main()
 
     for (int i = 0; i < n; i++)
     {
-        for (int j = i + 1; j < n; j++) // tránh lặp lại cặp (i,j) và (j,i)
+        for (int j = i + 1; j < n; j++) 
         {
             if (arr[i] + arr[j] == value)
             {
