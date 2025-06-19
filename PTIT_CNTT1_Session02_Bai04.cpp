@@ -23,13 +23,7 @@ int main() {
     cin >> pos;
     cout << "Nhap gia tri can sua: ";
     cin >> value;
-    for (int i = 0; i < n; i++)
-    {
-        if (i == pos) {
-            arr[i] = value;
-            break;
-        }
-    }
+    arr[pos] = value;
     for (int i = 0; i < n; i++) {
         cout << "arr[" << i << "] = " << arr[i] << endl;
     }
