@@ -5,7 +5,7 @@
 int n;
 bool scan = true;
 
-void merge(int arr[], int left, int mid, int right) {
+void merge(int arr[], int left, int mid, int right) {     // Dộ phức tạp của thuật toán tốt nhất và xấu nhất O(n log n)
     int n1 = mid - left + 1;
     int n2 = right - mid;
     

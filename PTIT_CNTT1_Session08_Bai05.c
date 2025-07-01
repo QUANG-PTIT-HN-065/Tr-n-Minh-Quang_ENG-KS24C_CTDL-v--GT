@@ -5,7 +5,7 @@
 int n;
 bool scan = true;
 
-void insertionSort(int arr[]) {
+void insertionSort(int arr[]) {               // Độ phức tạp về thời gian tốt thất O(n) , xấu nhất O(n^2)
     for (int i = 0; i < n-1; i++)
     {
         int key = arr[i + 1];

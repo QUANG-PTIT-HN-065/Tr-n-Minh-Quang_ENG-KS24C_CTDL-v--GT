@@ -5,7 +5,7 @@
 int n;
 bool scan = true;
 
-int partition(int arr[],int left,int right) {
+int partition(int arr[],int left,int right) {        // Dộ phức tạp của thuật toán tốt nhất  O(n log n) và xấu nhất là O(n^2)
     int pivot = arr[right];
     int i = left - 1;
     

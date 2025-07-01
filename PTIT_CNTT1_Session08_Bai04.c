@@ -5,7 +5,7 @@
 int n;
 bool scan = true;
 
-void selectionSort(int arr[]) {
+void selectionSort(int arr[]) {                   // thuật toán có độ phức tạp tốt nhất và xấu nhất là O(n^2)
     for (int i = 0; i < n-1; i++)
     {
         int minInDex = i;
@@ -39,6 +39,7 @@ int main() {
     scanf("%d", &n);
     if (n < 1 || n > 1000)
     {
+        printf("so phan tu ko hop le: ");
         return 0;
     }
     

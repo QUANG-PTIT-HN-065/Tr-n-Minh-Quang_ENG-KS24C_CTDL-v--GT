@@ -4,17 +4,18 @@
 int n;
 bool scan = true;
 
-void bubbleSort(int arr[]) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
+void linearSearch (int arr[],int value){    // Dộ phức tạp Thời gian tốt nhất O(1) , xấu nhất O(n)
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == value)
+        {
+            printf("vi tri thu: %d",i+1);
+            return ;
         }
     }
+    printf("khong tim thay: ");
 }
+
 void print(int arr[]) {
     for (int i = 0; i < n; i++) {
         if (scan) {
@@ -32,16 +33,17 @@ int main() {
     scanf("%d", &n);
     if (n < 1 || n > 1000)
     {
+        printf("so phan tu ko hop le: ");
         return 0;
     }
     
     int arr[n];
-
     print(arr); 
+    int value;
+    printf("phan tu can tim: ");
+    scanf("%d",&value);
     printf("Mang da nhap: \n");
     print(arr); 
-    printf("Mang da sap xep: \n");
-    bubbleSort(arr);
-    print(arr);
+    linearSearch(arr,value);
     return 0;
 }
