@@ -16,20 +16,21 @@ struct Node* createNode(int value) {
     newNode->next = NULL;
     return newNode;
 }
-
-void seach(Node* head ,int value) {
+void printNode(Node* head) {
     struct Node* temp = head;
-    int count =0;
     while (temp != NULL) {
-        if (temp->data == value)
-        {
-            printf("true");
-            return;
-        }
-        ;
+        printf("%d -> ", temp->data);
         temp = temp->next;
     }
-    printf("False\n");
+    printf("NULL\n");
+}
+void seach(Node* head,int mid) {
+    struct Node* temp = head;
+    for (int i = 0; i < mid; i++)
+    {
+        temp = temp->next;
+    }
+    printf("Node %d: %d",mid,temp->data);
 }
 
 int main() {
@@ -37,15 +38,14 @@ int main() {
     Node* temp = NULL;
     head = createNode(10);
     temp = head;
-
-    for (int i = 1; i <= 4; i++)
+    int len=1;
+    for (int i = 0; i < 5; i++)
     {
-        temp->next = createNode(i);
+        temp->next = createNode(++len);
         temp = temp->next;
     }
-    int value;
-    scanf("%d",&value);
-    seach(head,value);
+    printNode(head);
+    seach(head,(len/2)+1);
 
     return 0;
 }

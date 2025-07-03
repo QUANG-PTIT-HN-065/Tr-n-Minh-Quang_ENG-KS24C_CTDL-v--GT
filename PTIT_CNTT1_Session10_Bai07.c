@@ -17,6 +17,23 @@ struct Node* createNode(int value) {
     return newNode;
 }
 
+void sort(struct Node* head) {
+    if (head == NULL) return;
+    struct Node* current;
+    struct Node* index;
+    int temp;
+
+    for (current = head; current->next != NULL; current = current->next) {
+        for (index = current->next; index != NULL; index = index->next) {
+            if (current->data > index->data) {
+                temp = current->data;
+                current->data = index->data;
+                index->data = temp;
+            }
+        }
+    }
+}
+
 void printNode(Node* head) {
     struct Node* temp = head;
     while (temp != NULL) {
@@ -25,29 +42,20 @@ void printNode(Node* head) {
     }
     printf("NULL\n");
 }
-void deleteHead(struct Node** headRef) {
-    if (*headRef == NULL) {
-        printf("Danh sach rong\n");
-        return;
-    }
-    struct Node* temp = *headRef;  
-    *headRef = (*headRef)->next;   
-    free(temp);                    
-}
+
 int main() {
     Node* head = NULL;
     Node* temp = NULL;
     head = createNode(10);
     temp = head;
 
-    for (int i = 1; i <= 5; i++)
+    for (int i = 9; i > 0; i--)
     {
         temp->next = createNode(i);
         temp = temp->next;
     }
     printNode(head);
-    deleteHead(&head);
+    sort(head);
     printNode(head);
-
     return 0;
 }

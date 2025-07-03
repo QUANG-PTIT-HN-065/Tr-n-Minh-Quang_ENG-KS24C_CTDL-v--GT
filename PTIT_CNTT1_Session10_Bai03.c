@@ -17,28 +17,39 @@ struct Node* createNode(int value) {
     return newNode;
 }
 
-void seach(Node* head) {
+void printNode(Node* head) {
     struct Node* temp = head;
-    int count =0;
     while (temp != NULL) {
-        count++;
+        printf("%d -> ", temp->data);
         temp = temp->next;
     }
-    printf("danh sach co %d phan tu\n",count);
+    printf("NULL\n");
 }
-
+void addEnd(struct Node** headRef, int value) {
+    struct Node* newNode = createNode(value);
+    struct Node* temp = *headRef;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    temp->next = newNode;       
+}
 int main() {
     Node* head = NULL;
     Node* temp = NULL;
     head = createNode(10);
     temp = head;
 
-    for (int i = 1; i <= 10; i++)
+    for (int i = 1; i <= 5; i++)
     {
         temp->next = createNode(i);
         temp = temp->next;
     }
-    seach(head);
+    printNode(head);
+    int value;
+    scanf("%d",&value);
+    addEnd(&head,value);
+    printNode(head);
 
     return 0;
 }
