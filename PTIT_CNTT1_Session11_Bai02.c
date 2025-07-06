@@ -3,7 +3,8 @@
 
 typedef struct Node {
     int data;             
-    struct Node* next;     
+    struct Node* next; 
+    struct Node* prev;
 }Node;
 
 struct Node* createNode(int value) {
@@ -14,23 +15,8 @@ struct Node* createNode(int value) {
     }
     newNode->data = value;
     newNode->next = NULL;
+    newNode->prev = NULL;
     return newNode;
-}
-void printNode(Node* head) {
-    struct Node* temp = head;
-    while (temp != NULL) {
-        printf("%d -> ", temp->data);
-        temp = temp->next;
-    }
-    printf("NULL\n");
-}
-void seach(Node* head,int mid) {
-    struct Node* temp = head;
-    for (int i = 0; i < mid; i++)
-    {
-        temp = temp->next;
-    }
-    printf("Node %d: %d",mid,temp->data);
 }
 
 int main() {
@@ -38,14 +24,19 @@ int main() {
     Node* temp = NULL;
     head = createNode(10);
     temp = head;
-    int len=1;
-    for (int i = 0; i < 5; i++)
+
+    for (int i = 2; i <= 5; i++)
     {
-        temp->next = createNode(++len);
+        Node* newNode = createNode(i*10);
+        temp->next = newNode;
+        newNode->prev = temp;
+        temp = newNode;
+    }
+    temp = head;
+    for (int i = 1;temp != NULL; i++)
+    {
+        printf("Node %d: %d\n",i,temp->data);
         temp = temp->next;
     }
-    printNode(head);
-    seach(head,(len/2)+1);
-
     return 0;
 }
