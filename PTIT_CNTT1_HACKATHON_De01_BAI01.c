@@ -6,32 +6,58 @@
 typedef struct
 {
     int id;
-    char name[100];
-    char category[100];
-    float price;
-} Food;
+    char title[100];
+    int Priority;
+    char Deadline[100];
+} Quest;
 
 typedef struct Node
 {
-    Food data;
+    Quest data;
     struct Node *next;
 } Node;
 typedef struct Node2
 {
-    Food data;
+    Quest data;
     struct Node2 *next;
     struct Node2 *per;
 } Node2;
 
 int id = 1;
 
-Node *createNode(char name[], char category[], float price)
+void deleteID(Node **head, int id)
+{
+    Node *temp = *head;
+    Node *prev = NULL;
+    if (temp != NULL && temp->data.id == id)
+    {
+        *head = temp->next;
+        free(temp);
+        printf("Đã xoá ID %d\n", id);
+        return;
+    }
+    while (temp != NULL && temp->data.id != id)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+    if (temp == NULL)
+    {
+        printf("Không tìm thấy ID %d\n", id);
+        return;
+    }
+    prev->next = temp->next;
+    free(temp);
+    printf("Đã xoá ID %d\n", id);
+}
+
+Node *createNode(char title[], char Deadline[], int Priority)
 {
     Node *newNode = (Node *)malloc(sizeof(Node));
     newNode->data.id = id++;
-    strcpy(newNode->data.name, name);
-    strcpy(newNode->data.category, category);
-    newNode->data.price = price;
+    strcpy(newNode->data.title, title);
+    strcpy(newNode->data.Deadline, Deadline);
+    newNode->data.Priority = Priority;
     newNode->next = NULL;
     return newNode;
 }
@@ -62,45 +88,45 @@ void printNode(Node *head)
     while (head != NULL)
     {
         printf("ID: %d\n", head->data.id);
-        printf("Ten mon: %s\n", head->data.name);
-        printf("Danh muc: %s\n", head->data.category);
-        printf("Gia: %.2f\n", head->data.price);
+        printf("Ten nhiem vu: %s\n", head->data.title);
+        printf("muc do uu tien: %d\n", head->data.Priority);
+        printf("thoi gian: %s\n", head->data.Deadline);
         printf("--------------------------\n");
         head = head->next;
     }
 }
 
-void updateFood(Node *head, int id)
+void updateQuest(Node *head, int id)
 {
     Node *temp = head;
     while (temp != NULL)
     {
         if (temp->data.id == id)
         {
-            char name[100];
-            char category[100];
-            float price;
+            char title[100];
+            int Priority;
+            char Deadline[100];
             printf("Thong tin hien tai:\n");
             printf("ID: %d\n", temp->data.id);
-            printf("Ten mon: %s\n", temp->data.name);
-            printf("Danh muc: %s\n", temp->data.category);
-            printf("Gia: %.2f\n", temp->data.price);
+            printf("Ten nhiem vu: %s\n", temp->data.title);
+            printf("Muc do uu tien: %d\n", temp->data.Priority);
+            printf("thoi gian: %s\n", temp->data.Deadline);
             printf("--------------------------\n");
             printf("Nhap ten mon an moi: ");
             getchar();
-            fgets(name, sizeof(name), stdin);
-            name[strcspn(name, "\n")] = '\0';
+            fgets(title, sizeof(title), stdin);
+            title[strcspn(title, "\n")] = '\0';
 
-            printf("Nhap danh muc mon an moi: ");
-            fgets(category, sizeof(category), stdin);
-            category[strcspn(category, "\n")] = '\0';
+            printf("Nhap thoi gian: ");
+            fgets(Deadline, sizeof(Deadline), stdin);
+            Deadline[strcspn(Deadline, "\n")] = '\0';
 
-            printf("Nhap gia tien moi: ");
-            scanf("%f", &price);
+            printf("Nhap muc uu tien: ");
+            scanf("%d", &Priority);
             getchar();
-            strcpy(temp->data.name, name);
-            strcpy(temp->data.category, category);
-            temp->data.price = price;
+            strcpy(temp->data.title, title);
+            strcpy(temp->data.Deadline, Deadline);
+            temp->data.Priority = Priority;
 
             printf("Cap nhat thanh cong!\n");
             return;
@@ -110,36 +136,18 @@ void updateFood(Node *head, int id)
 
     printf("Khong tim thay mon an voi ID = %d\n", id);
 }
-void printNode2(Node2 *head)
-{
-    if (head == NULL)
-    {
-        printf("Danh sach rong.\n");
-        return;
-    }
 
-    while (head != NULL)
-    {
-        printf("ID: %d\n", head->data.id);
-        printf("Ten mon: %s\n", head->data.name);
-        printf("Danh muc: %s\n", head->data.category);
-        printf("Gia: %.2f\n", head->data.price);
-        printf("--------------------------\n");
-        head = head->next;
-    }
-}
-
-void search(Node *head, char name[])
+void search(Node *head, char title[])
 {
     Node *temp = head;
     while (temp != NULL)
     {
-        if (strstr(temp->data.name, name))
+        if (strstr(temp->data.title, title))
         {
             printf("ID: %d\n", temp->data.id);
-            printf("Ten mon: %s\n", temp->data.name);
-            printf("Danh muc: %s\n", temp->data.category);
-            printf("Gia: %.2f\n", temp->data.price);
+            printf("Ten nhiem vu: %s\n", temp->data.title);
+            printf("muc do uu tien: %d\n", temp->data.Priority);
+            printf("thoi gian: %s\n", temp->data.Deadline);
             printf("--------------------------\n");
             return;
         }
@@ -158,9 +166,9 @@ void sort(Node *head)
         bool check = true;
         for (Node *j = i->next; j != NULL; j = j->next)
         {
-            if (i->data.price > j->data.price)
+            if (i->data.Priority > j->data.Priority)
             {
-                Food temp = i->data;
+                Quest temp = i->data;
                 i->data = j->data;
                 j->data = temp;
                 check = false;
@@ -172,10 +180,10 @@ void sort(Node *head)
         }
     }
 }
-Node2 *createNode2(Food food)
+Node2 *createNode2(Quest Quest)
 {
     Node2 *newNode = (Node2 *)malloc(sizeof(Node2));
-    newNode->data = food;
+    newNode->data = Quest;
     newNode->next = NULL;
     newNode->per = NULL;
     return newNode;
@@ -215,13 +223,13 @@ void moveList(Node **head, Node2 **head2, int id)
                 prev->next = temp->next;
             }
             free(temp);
-            printf("Da chuyen mon an co ID %d sang danh sach da ngung ban.\n", id);
+            printf("Da chuyen nhiem vu co ID %d sang da hoan thanh.\n", id);
             return;
         }
         prev = temp;
         temp = temp->next;
     }
-    printf("Khong tim thay mon an voi ID = %d trong danh sach dang ban.\n", id);
+    printf("Khong tim thay ID %d \n", id);
 }
 
 int main()
@@ -232,14 +240,14 @@ int main()
 
     do
     {
-        printf("=============RESTAURANT===========\n");
-        printf("1. Them mon an\n");
-        printf("2. Hien thi danh sach mon dang ban\n");
-        printf("3. Cap nhat thong tin mon an\n");
-        printf("4. Danh dau ngung ban (chuyen sang danh sach mon ngung ban)\n");
-        printf("5. Hien thi danh sach mon da ngung ban\n");
-        printf("6. Tim kiem theo ten mon\n");
-        printf("7. Sap xep mon theo gia tang dan\n");
+        printf("=============Quest===========\n");
+        printf("1. Them nhiem vu\n");
+        printf("2. Hien thi nhiem vu\n");
+        printf("3. xoa nhiem vu\n");
+        printf("4. cap nhat thong tin nhiem vu\n");
+        printf("5. danh dau nhiem vu hoan thanh\n");
+        printf("6. Sap xep nhiem vu\n");
+        printf("7. Tim kiem nhiem vu\n");
         printf("8. Thoat chuong trinh\n");
         printf("----------------------------------\n");
         printf("Nhap lua chon: ");
@@ -251,23 +259,23 @@ int main()
         case 1:
         {
             system("cls");
-            char name[100];
-            char category[100];
-            float price;
+            char title[100];
+            char Deadline[100];
+            int Priority;
 
-            printf("Nhap ten mon an: ");
-            fgets(name, sizeof(name), stdin);
-            name[strcspn(name, "\n")] = '\0';
+            printf("Nhap ten nhiem vu: ");
+            fgets(title, sizeof(title), stdin);
+            title[strcspn(title, "\n")] = '\0';
 
-            printf("Nhap danh muc mon an: ");
-            fgets(category, sizeof(category), stdin);
-            category[strcspn(category, "\n")] = '\0';
+            printf("Nhap thoi gian nhien vu: ");
+            fgets(Deadline, sizeof(Deadline), stdin);
+            Deadline[strcspn(Deadline, "\n")] = '\0';
 
-            printf("Nhap gia tien: ");
-            scanf("%f", &price);
+            printf("Nhap muc do uu tien: ");
+            scanf("%d", &Priority);
             getchar();
 
-            Node *newNode = createNode(name, category, price);
+            Node *newNode = createNode(title, Deadline, Priority);
             appendNode(&head, newNode);
             break;
         }
@@ -275,36 +283,42 @@ int main()
             system("cls");
             printNode(head);
             break;
-        case 3:
+        case 3:{
             int id1;
-            printf("nhap id mon an: ");
+            printf("nhap id nhiem vu: ");
             scanf("%d", &id1);
-            updateFood(head, id1);
+            deleteID(&head, id1);
             break;
-        case 4:
+        }
+        case 4:{
             system("cls");
             int id2;
-            printf("Nhap vao ID can chuyen: ");
+            printf("Nhap vao ID can cap nhat: ");
             scanf("%d", &id2);
-            moveList(&head, &head2, id2);
+            updateQuest(head, id2);
             break;
+        }
         case 5:
             system("cls");
-            printNode2(head2);
+            int id3;
+            printf("Nhap ID nhiem vu hoan thanh: ");
+            scanf("%d", &id3);
+            moveList(&head, &head2, id3);
             break;
         case 6:
-            system("cls");
-            char name[100];
-            printf("nhap vao ten mon can tin:");
-            fgets(name, sizeof(name), stdin);
-            name[strcspn(name, "\n")] = '\0';
-            search(head, name);
-            break;
-        case 7:
             system("cls");
             sort(head);
             printf("da xap xep xong\n");
             break;
+        case 7:{
+            char searchTitle[100];
+            getchar();
+            printf("nhap vao ten nhiem vu can tim: ");
+            fgets(searchTitle, sizeof(searchTitle), stdin);
+            searchTitle[strcspn(searchTitle, "\n")] = '\0';
+            search(head, searchTitle);
+            break;
+        }
         case 8:
             system("cls");
             printf("thoat chuong trinh");
