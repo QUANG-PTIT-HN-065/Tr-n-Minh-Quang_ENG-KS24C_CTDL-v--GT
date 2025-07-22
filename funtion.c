@@ -125,3 +125,78 @@ void BFS(struct Node* root,int data) {
     printf("False\n");
 }
 
+//bai 3
+void addNodeLevelOrder(struct Node* root, int data) {
+    if (root == NULL) {
+        printf("Cây rỗng, không thể thêm vào.\n");
+        return;
+    }
+
+    Queue q;
+    initQueue(&q);
+    enqueue(&q, root);
+
+    while (!isQueueEmpty(&q)) {
+        struct Node* current = dequeue(&q);
+
+        if (current->left == NULL) {
+            current->left = createNode(data);
+            return;
+        } else {
+            enqueue(&q, current->left);
+        }
+
+        if (current->right == NULL) {
+            current->right = createNode(data);
+            return;
+        } else {
+            enqueue(&q, current->right);
+        }
+    }
+}
+
+// bai 4
+int countLeafRecursive(struct Node* root) {
+    if (root == NULL) return 0;
+    if (root->left == NULL && root->right == NULL)
+        return 1;
+    return countLeafRecursive(root->left) + countLeafRecursive(root->right);
+}
+
+//bai 5
+ int findMaxValue(struct Node* root) {
+    if (root == NULL) {
+        printf("Cây rỗng!\n");
+        return -99999; 
+    }
+
+    int max = root->data;
+
+    Queue q;
+    initQueue(&q);
+    enqueue(&q, root);
+    while (!isEmpty(&q)) {
+        struct Node* current = dequeue(&q);
+
+        if (current->data > max) {
+            max = current->data;
+        }
+
+        if (current->left != NULL) {
+            enqueue(&q, current->left);
+        }
+
+        if (current->right != NULL) {
+            enqueue(&q, current->right);
+        }
+    }
+    return max;
+}
+//bai 6
+int findLevel(Node* root, int value, int level) {
+    if (root == NULL) return -1; 
+    if (root->data == value) return level;
+    int leftLevel = findLevel(root->left, value, level + 1);
+    if (leftLevel != -1) return leftLevel;
+    return findLevel(root->right, value, level + 1);
+}
